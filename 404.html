@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found | MacroPal</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .error-container {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .error-code {
+            font-size: 8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0;
+            line-height: 1;
+            animation: bounce 2s infinite;
+        }
+        
+        .error-icon {
+            font-size: 6rem;
+            margin-bottom: 1rem;
+            animation: shake 3s infinite;
+        }
+        
+        .error-title {
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            margin: 1rem 0;
+        }
+        
+        .error-text {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+        
+        .error-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        
+        @keyframes shake {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+            10%, 30%, 50%, 70%, 90% {
+                transform: rotate(-5deg);
+            }
+            20%, 40%, 60%, 80% {
+                transform: rotate(5deg);
+            }
+        }
+    </style>
+</head>
+<body class="fade-in">
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <span class="logo-icon">🥗</span>
+                <span class="logo-text">MacroPal</span>
+            </div>
+            <nav class="nav">
+                <a href="index.html">Home</a>
+                <a href="index.html#about">About</a>
+                <a href="index.html#features">Features</a>
+                <a href="index.html#download">Download</a>
+                <a href="index.html#support">Support</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Error Content -->
+    <section class="error-container">
+        <div class="error-icon">🍔</div>
+        <h1 class="error-code">404</h1>
+        <h2 class="error-title">Oops! Page Not Found</h2>
+        <p class="error-text">
+            Looks like this page went on a diet and disappeared! 
+            Don't worry, we have plenty of other nutritious content for you to explore.
+        </p>
+        <div class="error-links">
+            <a href="index.html" class="btn btn-primary">Back to Home</a>
+            <a href="index.html#features" class="btn btn-secondary">View Features</a>
+            <a href="index.html#download" class="btn btn-secondary">Download App</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">
+                © 2026 MacroPal. Licensed under MIT License. 
+                <a href="https://github.com/Zanci19/MacroPal" target="_blank" class="footer-link">View on GitHub</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

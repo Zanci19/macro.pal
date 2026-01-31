@@ -19,6 +19,7 @@
         .example-icon {
             font-size: 5rem;
             margin-bottom: 1.5rem;
+            animation: pulse 2s infinite;
         }
         
         .example-title {
@@ -35,7 +36,7 @@
         }
     </style>
 </head>
-<body>
+<body class="fade-in">
     <!-- Header -->
     <header class="header">
         <div class="container">
@@ -55,13 +56,13 @@
 
     <!-- Example Page Content -->
     <section class="example-page">
-        <div class="example-icon">🚀</div>
-        <h1 class="example-title">Coming Soon</h1>
-        <p class="example-text">
+        <div class="example-icon animate-slide-up">🚀</div>
+        <h1 class="example-title animate-slide-up" style="animation-delay: 0.2s;">Coming Soon</h1>
+        <p class="example-text animate-slide-up" style="animation-delay: 0.4s;">
             This page is currently under development. Check back soon for updates, 
             or return to the home page to learn more about MacroPal.
         </p>
-        <a href="index.html" class="btn btn-primary">Back to Home</a>
+        <a href="index.html" class="btn btn-primary animate-slide-up" style="animation-delay: 0.6s;">Back to Home</a>
     </section>
 
     <!-- Footer -->

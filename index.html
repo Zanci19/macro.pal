@@ -7,7 +7,7 @@
     <title>MacroPal - Your Personal Nutrition Tracking Companion</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="fade-in">
     <!-- Header -->
     <header class="header">
         <div class="container">
@@ -27,9 +27,9 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1 class="hero-title">Your Personal Nutrition Tracking Companion</h1>
-            <p class="hero-subtitle">Track your meals, monitor macros, log workouts, and achieve your health goals with MacroPal</p>
-            <div class="hero-buttons">
+            <h1 class="hero-title animate-slide-up">Your Personal Nutrition Tracking Companion</h1>
+            <p class="hero-subtitle animate-slide-up" style="animation-delay: 0.2s;">Track your meals, monitor macros, log workouts, and achieve your health goals with MacroPal</p>
+            <div class="hero-buttons animate-slide-up" style="animation-delay: 0.4s;">
                 <a href="#download" class="btn btn-primary">Download App</a>
                 <a href="#features" class="btn btn-secondary">Learn More</a>
             </div>
@@ -109,11 +109,122 @@
                     <p class="download-text">Coming soon to the App Store</p>
                     <a href="example.html" class="btn btn-secondary">Coming Soon</a>
                 </div>
-                <div class="download-card">
-                    <div class="download-icon">🌐</div>
-                    <h3 class="download-title">Web App</h3>
-                    <p class="download-text">Access MacroPal directly from your browser</p>
-                    <a href="example.html" class="btn btn-secondary">Launch Web App</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pro Tips Section -->
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">Pro Tips</h2>
+            <p class="section-text">Get the most out of MacroPal with these helpful tips</p>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <div class="tip-icon">📸</div>
+                    <h3 class="tip-title">Use the Barcode Scanner</h3>
+                    <p class="tip-text">For packaged foods - it's super fast and accurate!</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">🍽️</div>
+                    <h3 class="tip-title">Create Meal Templates</h3>
+                    <p class="tip-text">Save meals you eat regularly for quick logging</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">📊</div>
+                    <h3 class="tip-title">Check Analytics Weekly</h3>
+                    <p class="tip-text">Spot trends and adjust your diet accordingly</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">⚖️</div>
+                    <h3 class="tip-title">Weigh Consistently</h3>
+                    <p class="tip-text">Same time, same conditions for accurate tracking</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">🎯</div>
+                    <h3 class="tip-title">Set Realistic Goals</h3>
+                    <p class="tip-text">Celebrate small wins along your journey</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">💡</div>
+                    <h3 class="tip-title">Enable Smart Recommendations</h3>
+                    <p class="tip-text">Get personalized meal suggestions based on your profile</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Built With Modern Technology</h2>
+            <p class="section-text">MacroPal leverages cutting-edge technologies to deliver a seamless experience</p>
+            <div class="tech-grid">
+                <div class="tech-category">
+                    <h3 class="tech-category-title">Frontend</h3>
+                    <div class="tech-tags">
+                        <span class="tech-tag">React 19</span>
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">Ionic Framework 8</span>
+                        <span class="tech-tag">Framer Motion</span>
+                        <span class="tech-tag">Recharts</span>
+                    </div>
+                </div>
+                <div class="tech-category">
+                    <h3 class="tech-category-title">Backend</h3>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Firebase Authentication</span>
+                        <span class="tech-tag">Cloud Firestore</span>
+                        <span class="tech-tag">Firebase Storage</span>
+                        <span class="tech-tag">Firebase Functions</span>
+                    </div>
+                </div>
+                <div class="tech-category">
+                    <h3 class="tech-category-title">Mobile</h3>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Capacitor 8</span>
+                        <span class="tech-tag">iOS Native</span>
+                        <span class="tech-tag">Android Native</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">Roadmap</h2>
+            <p class="section-text">Exciting features coming to MacroPal</p>
+            <div class="roadmap-grid">
+                <div class="roadmap-card">
+                    <div class="roadmap-status">Coming Soon</div>
+                    <h3 class="roadmap-title">🌐 Multi-language Support</h3>
+                    <p class="roadmap-text">Access MacroPal in your preferred language</p>
+                </div>
+                <div class="roadmap-card">
+                    <div class="roadmap-status">Coming Soon</div>
+                    <h3 class="roadmap-title">🍽️ Recipe Builder</h3>
+                    <p class="roadmap-text">Create and save your own recipes with nutritional info</p>
+                </div>
+                <div class="roadmap-card">
+                    <div class="roadmap-status">Coming Soon</div>
+                    <h3 class="roadmap-title">📸 Photo Logging</h3>
+                    <p class="roadmap-text">Log meals with photos for visual tracking</p>
+                </div>
+                <div class="roadmap-card">
+                    <div class="roadmap-status">Future</div>
+                    <h3 class="roadmap-title">🔗 Fitness Tracker Integration</h3>
+                    <p class="roadmap-text">Sync with Apple Health and Google Fit</p>
+                </div>
+                <div class="roadmap-card">
+                    <div class="roadmap-status">Future</div>
+                    <h3 class="roadmap-title">💧 Water Tracking</h3>
+                    <p class="roadmap-text">Monitor daily water intake</p>
+                </div>
+                <div class="roadmap-card">
+                    <div class="roadmap-status">Future</div>
+                    <h3 class="roadmap-title">🥘 Meal Planning</h3>
+                    <p class="roadmap-text">Plan your meals ahead with a calendar view</p>
                 </div>
             </div>
         </div>
