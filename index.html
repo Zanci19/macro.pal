@@ -1,1199 +1,271 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>MacroPal – Smart Macro Tracking</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="MacroPal is a clean, fast food and macro tracker. Track your meals, see your day at a glance, and stay on top of your goals."
-    />
-
-    <!-- Favicon (replace with your own if you want) -->
-    <link rel="icon" href="favicon.ico" />
-
-    <!-- Inter font -->
-    <link
-      rel="preconnect"
-      href="https://fonts.googleapis.com"
-    />
-    <link
-      rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-
-    <style>
-      :root {
-        --bg: #020617;
-        --bg-elevated: #020817;
-        --bg-soft: #0b1120;
-        --accent: #38bdf8;
-        --accent-soft: rgba(56, 189, 248, 0.12);
-        --accent-strong: #0ea5e9;
-        --text: #e5e7eb;
-        --text-muted: #9ca3af;
-        --border-subtle: rgba(148, 163, 184, 0.3);
-        --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.8);
-        --radius-card: 20px;
-        --radius-pill: 999px;
-        --max-width: 1080px;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
-          "Segoe UI", sans-serif;
-        background: radial-gradient(circle at top, #0f172a 0, #020617 55%, #000 100%);
-        color: var(--text);
-        -webkit-font-smoothing: antialiased;
-      }
-
-      body {
-        display: flex;
-        justify-content: center;
-      }
-
-      .page {
-        width: 100%;
-        max-width: var(--max-width);
-        padding: 16px 16px 48px;
-      }
-
-      header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        padding: 8px 4px 4px;
-        position: sticky;
-        top: 0;
-        z-index: 20;
-        backdrop-filter: blur(16px);
-        background: linear-gradient(
-          to bottom,
-          rgba(15, 23, 42, 0.9),
-          rgba(15, 23, 42, 0.4),
-          transparent
-        );
-      }
-
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .brand-mark {
-        width: 32px;
-        height: 32px;
-        border-radius: 10px;
-        background: radial-gradient(circle at 30% 20%, #38bdf8, #0ea5e9 40%, #14b8a6 100%);
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.25),
-          0 10px 30px rgba(8, 47, 73, 0.9);
-        font-size: 18px;
-      }
-
-      .brand-title {
-        font-weight: 700;
-        letter-spacing: 0.03em;
-        font-size: 18px;
-      }
-
-      .brand-sub {
-        font-size: 11px;
-        text-transform: uppercase;
-        letter-spacing: 0.14em;
-        color: var(--text-muted);
-      }
-
-      nav {
-        display: flex;
-        gap: 10px;
-        font-size: 13px;
-      }
-
-      nav a {
-        color: var(--text-muted);
-        text-decoration: none;
-        padding: 6px 10px;
-        border-radius: var(--radius-pill);
-        border: 1px solid transparent;
-        transition: color 0.18s ease, background 0.18s ease, border-color 0.18s ease;
-        white-space: nowrap;
-      }
-
-      nav a:hover {
-        color: var(--text);
-        background: rgba(15, 23, 42, 0.85);
-        border-color: rgba(148, 163, 184, 0.35);
-      }
-
-      .hero {
-        display: grid;
-        grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
-        gap: 32px;
-        align-items: center;
-        padding: 24px 4px 40px;
-      }
-
-      .hero-kicker {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 4px 10px 4px 4px;
-        border-radius: var(--radius-pill);
-        background: radial-gradient(circle at left, var(--accent-soft), transparent 70%);
-        border: 1px solid rgba(148, 163, 184, 0.35);
-        color: var(--text-muted);
-        font-size: 11px;
-        text-transform: uppercase;
-        letter-spacing: 0.14em;
-      }
-
-      .hero-kicker-badge {
-        padding: 3px 10px;
-        border-radius: var(--radius-pill);
-        background: rgba(15, 23, 42, 0.95);
-        color: var(--accent-strong);
-        font-weight: 600;
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-      }
-
-      .hero-title {
-        font-weight: 700;
-        font-size: clamp(32px, 4vw, 40px);
-        line-height: 1.1;
-        margin: 14px 0 10px;
-      }
-
-      .hero-title span {
-        background: linear-gradient(120deg, #38bdf8, #22c55e);
-        -webkit-background-clip: text;
-        color: transparent;
-      }
-
-      .hero-sub {
-        font-size: 15px;
-        line-height: 1.6;
-        color: var(--text-muted);
-        max-width: 480px;
-      }
-
-      .hero-cta-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-top: 20px;
-      }
-
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        border-radius: 999px;
-        border: 1px solid transparent;
-        padding: 9px 16px;
-        font-size: 14px;
-        font-weight: 500;
-        cursor: pointer;
-        text-decoration: none;
-        transition: transform 0.15s ease, box-shadow 0.15s ease,
-          background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
-        white-space: nowrap;
-      }
-
-      .btn-primary {
-        background: radial-gradient(circle at top left, #38bdf8, #0ea5e9 45%, #22c55e 100%);
-        color: #0b1120;
-        box-shadow: 0 14px 35px rgba(8, 47, 73, 0.85);
-      }
-
-      .btn-primary:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 18px 45px rgba(8, 47, 73, 1);
-      }
-
-      .btn-ghost {
-        border-color: rgba(148, 163, 184, 0.45);
-        background: rgba(15, 23, 42, 0.85);
-        color: var(--text);
-      }
-
-      .btn-ghost:hover {
-        background: rgba(15, 23, 42, 0.98);
-      }
-
-      .btn-label-sub {
-        font-size: 11px;
-        color: var(--text-muted);
-      }
-
-      .hero-meta-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-top: 18px;
-        font-size: 11px;
-        color: var(--text-muted);
-      }
-
-      .hero-meta-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 6px 11px;
-        border-radius: 999px;
-        background: rgba(15, 23, 42, 0.9);
-        border: 1px solid rgba(31, 41, 55, 0.9);
-      }
-
-      .dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 999px;
-        background: #22c55e;
-        box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.25);
-      }
-
-      .hero-device {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .device-card {
-        position: relative;
-        width: 100%;
-        max-width: 320px;
-        border-radius: 36px;
-        padding: 12px 10px 16px;
-        background: radial-gradient(circle at top, #020617, #020617 55%, #000 100%);
-        border: 1px solid rgba(148, 163, 184, 0.35);
-        box-shadow: var(--shadow-soft);
-        overflow: hidden;
-      }
-
-      .device-notch {
-        width: 130px;
-        height: 20px;
-        border-radius: 999px;
-        background: radial-gradient(circle at top, #020617, #020617 55%, #000);
-        margin: 0 auto 10px;
-      }
-
-      .device-screen {
-        border-radius: 26px;
-        background: linear-gradient(145deg, #020617, #020617 60%, #0f172a 100%);
-        border: 1px solid rgba(15, 23, 42, 0.9);
-        padding: 10px 10px 14px;
-      }
-
-      .device-top-bar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 10px;
-        color: #9ca3af;
-        margin-bottom: 8px;
-      }
-
-      .device-pill {
-        padding: 4px 9px;
-        border-radius: 999px;
-        background: rgba(15, 23, 42, 0.98);
-        color: #e5e7eb;
-        font-size: 10px;
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-      }
-
-      .device-pill-dot {
-        width: 7px;
-        height: 7px;
-        border-radius: 999px;
-        background: #22c55e;
-      }
-
-      .device-day-header {
-        margin: 8px 0 10px;
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-        gap: 8px;
-      }
-
-      .device-day-title {
-        font-size: 14px;
-        font-weight: 600;
-      }
-
-      .device-day-sub {
-        font-size: 11px;
-        color: var(--text-muted);
-      }
-
-      .device-macros-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-        margin-bottom: 10px;
-      }
-
-      .chip {
-        border-radius: 999px;
-        padding: 5px 9px;
-        font-size: 10px;
-        background: rgba(15, 23, 42, 0.95);
-        border: 1px solid rgba(31, 41, 55, 0.9);
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-      }
-
-      .chip span.chip-label {
-        color: var(--text-muted);
-      }
-
-      .chip span.chip-value {
-        font-weight: 600;
-      }
-
-      .chip-accent {
-        background: rgba(8, 47, 73, 0.95);
-        border-color: rgba(56, 189, 248, 0.55);
-      }
-
-      .chip-dot {
-        width: 7px;
-        height: 7px;
-        border-radius: 999px;
-      }
-
-      .chip-dot.blue {
-        background: #38bdf8;
-      }
-
-      .chip-dot.green {
-        background: #22c55e;
-      }
-
-      .chip-dot.yellow {
-        background: #eab308;
-      }
-
-      .device-meal-list {
-        display: grid;
-        gap: 8px;
-        margin-top: 6px;
-      }
-
-      .meal-card {
-        border-radius: 12px;
-        padding: 7px 8px;
-        background: rgba(15, 23, 42, 0.95);
-        border: 1px solid rgba(31, 41, 55, 0.9);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 6px;
-      }
-
-      .meal-main {
-        display: flex;
-        flex-direction: column;
-        gap: 3px;
-      }
-
-      .meal-name {
-        font-size: 11px;
-        text-transform: uppercase;
-        letter-spacing: 0.12em;
-        color: var(--text-muted);
-      }
-
-      .meal-items {
-        font-size: 12px;
-        color: #e5e7eb;
-      }
-
-      .meal-kcal {
-        font-size: 13px;
-        font-weight: 600;
-      }
-
-      .meal-kcal-sub {
-        font-size: 10px;
-        color: var(--text-muted);
-        text-align: right;
-      }
-
-      .device-footer {
-        margin-top: 10px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 10px;
-        color: var(--text-muted);
-      }
-
-      .device-footer-btn {
-        border-radius: 999px;
-        padding: 6px 10px;
-        border: 1px solid rgba(31, 41, 55, 0.9);
-        background: rgba(15, 23, 42, 0.98);
-        font-size: 11px;
-      }
-
-      main {
-        display: grid;
-        gap: 24px;
-      }
-
-      section {
-        border-radius: var(--radius-card);
-        background: rgba(15, 23, 42, 0.85);
-        border: 1px solid var(--border-subtle);
-        box-shadow: 0 12px 35px rgba(15, 23, 42, 0.8);
-        padding: 18px 18px 20px;
-      }
-
-      section h2 {
-        margin: 0 0 4px;
-        font-size: 18px;
-      }
-
-      section p.section-sub {
-        margin: 0 0 14px;
-        font-size: 13px;
-        color: var(--text-muted);
-      }
-
-      /* FEATURES */
-
-      .features-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-        gap: 14px;
-        margin-top: 6px;
-      }
-
-      .feature-card {
-        padding: 12px 12px 13px;
-        border-radius: 14px;
-        border: 1px solid rgba(30, 64, 175, 0.7);
-        background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.12), transparent 55%),
-          radial-gradient(circle at bottom right, rgba(34, 197, 94, 0.08), transparent 60%),
-          rgba(15, 23, 42, 0.98);
-      }
-
-      .feature-icon {
-        width: 28px;
-        height: 28px;
-        border-radius: 999px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 16px;
-        background: rgba(15, 23, 42, 0.9);
-        border: 1px solid rgba(148, 163, 184, 0.45);
-        margin-bottom: 8px;
-      }
-
-      .feature-title {
-        font-size: 14px;
-        font-weight: 600;
-        margin-bottom: 4px;
-      }
-
-      .feature-body {
-        font-size: 13px;
-        color: var(--text-muted);
-        line-height: 1.5;
-      }
-
-      /* CHANGELOG */
-
-      .changelog-controls {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 8px;
-        margin-bottom: 10px;
-        flex-wrap: wrap;
-      }
-
-      .changelog-badges {
-        display: flex;
-        gap: 6px;
-        flex-wrap: wrap;
-        font-size: 11px;
-      }
-
-      .badge {
-        padding: 4px 8px;
-        border-radius: 999px;
-        border: 1px solid rgba(148, 163, 184, 0.45);
-        background: rgba(15, 23, 42, 0.96);
-        color: var(--text-muted);
-      }
-
-      .badge-accent {
-        border-color: rgba(56, 189, 248, 0.7);
-        background: rgba(8, 47, 73, 0.96);
-        color: #e0f2fe;
-      }
-
-      .changelog-list {
-        display: grid;
-        gap: 10px;
-        margin-top: 8px;
-      }
-
-      .changelog-item {
-        border-radius: 14px;
-        padding: 10px 12px 11px;
-        background: rgba(15, 23, 42, 0.96);
-        border: 1px solid rgba(55, 65, 81, 0.95);
-        position: relative;
-      }
-
-      .changelog-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-        gap: 10px;
-      }
-
-      .version-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 4px 9px;
-        border-radius: 999px;
-        border: 1px solid rgba(148, 163, 184, 0.5);
-        background: rgba(15, 23, 42, 0.98);
-        font-size: 11px;
-      }
-
-      .version-tag {
-        padding: 3px 6px;
-        border-radius: 999px;
-        font-size: 10px;
-        background: rgba(56, 189, 248, 0.12);
-        color: #bae6fd;
-      }
-
-      .changelog-date {
-        font-size: 11px;
-        color: var(--text-muted);
-      }
-
-      .changelog-body {
-        margin-top: 7px;
-        font-size: 13px;
-      }
-
-      .changelog-body ul {
-        padding-left: 18px;
-        margin: 0;
-      }
-
-      .changelog-body li {
-        margin-bottom: 3px;
-      }
-
-      .label-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        padding: 2px 7px;
-        border-radius: 999px;
-        font-size: 10px;
-        background: rgba(31, 41, 55, 0.95);
-        color: var(--text-muted);
-        margin-right: 4px;
-      }
-
-      .label-pill span {
-        font-size: 9px;
-        text-transform: uppercase;
-        letter-spacing: 0.12em;
-        color: rgba(156, 163, 175, 0.9);
-      }
-
-      /* DOWNLOADS */
-
-      .download-grid {
-        display: grid;
-        grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-        gap: 16px;
-      }
-
-      .download-card {
-        border-radius: 14px;
-        padding: 12px 12px 14px;
-        background: rgba(15, 23, 42, 0.98);
-        border: 1px solid rgba(55, 65, 81, 0.95);
-      }
-
-      .download-label {
-        font-size: 11px;
-        text-transform: uppercase;
-        letter-spacing: 0.14em;
-        color: var(--text-muted);
-        margin-bottom: 3px;
-      }
-
-      .download-version {
-        display: flex;
-        align-items: baseline;
-        gap: 8px;
-        margin-bottom: 6px;
-      }
-
-      .download-version strong {
-        font-size: 18px;
-      }
-
-      .download-meta {
-        font-size: 12px;
-        color: var(--text-muted);
-      }
-
-      .download-meta span {
-        margin-right: 8px;
-      }
-
-      .download-actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 12px;
-      }
-
-      .download-note {
-        font-size: 11px;
-        color: var(--text-muted);
-        margin-top: 8px;
-      }
-
-      .panel {
-        font-size: 13px;
-        color: var(--text-muted);
-        line-height: 1.6;
-      }
-
-      .panel ul {
-        padding-left: 18px;
-      }
-
-      /* SUPPORT */
-
-      .support-grid {
-        display: grid;
-        grid-template-columns: minmax(0, 2.5fr) minmax(0, 2fr);
-        gap: 16px;
-      }
-
-      .support-card {
-        border-radius: 14px;
-        padding: 11px 12px 12px;
-        background: rgba(15, 23, 42, 0.98);
-        border: 1px solid rgba(55, 65, 81, 0.95);
-        font-size: 13px;
-        color: var(--text-muted);
-      }
-
-      .support-card h3 {
-        margin: 0 0 6px;
-        font-size: 14px;
-      }
-
-      .support-list {
-        padding-left: 18px;
-        margin: 4px 0 0;
-      }
-
-      .support-list li {
-        margin-bottom: 3px;
-      }
-
-      footer {
-        margin-top: 18px;
-        padding: 10px 4px 0;
-        font-size: 11px;
-        color: var(--text-muted);
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 6px;
-      }
-
-      footer a {
-        color: var(--accent-strong);
-        text-decoration: none;
-      }
-
-      footer a:hover {
-        text-decoration: underline;
-      }
-
-      /* Responsive */
-
-      @media (max-width: 768px) {
-        header {
-          padding-top: 6px;
-        }
-
-        nav {
-          display: none;
-        }
-
-        .hero {
-          grid-template-columns: minmax(0, 1fr);
-          padding-top: 18px;
-        }
-
-        .hero-device {
-          order: -1;
-        }
-
-        .download-grid,
-        .support-grid {
-          grid-template-columns: minmax(0, 1fr);
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="page">
-      <header>
-        <div class="brand">
-          <div class="brand-mark">MP</div>
-          <div>
-            <div class="brand-title">MacroPal</div>
-            <div class="brand-sub">Food & macro tracker</div>
-          </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MacroPal - Your Personal Nutrition Tracking Companion. Track calories, macros, workouts, and achieve your health goals.">
+    <title>MacroPal - Your Personal Nutrition Tracking Companion</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="fade-in">
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <span class="logo-icon">🥗</span>
+                <span class="logo-text">MacroPal</span>
+            </div>
+            <nav class="nav">
+                <a href="#about">About</a>
+                <a href="#features">Features</a>
+                <a href="#download">Download</a>
+                <a href="#support">Support</a>
+            </nav>
         </div>
-        <nav>
-          <a href="#features">Features</a>
-          <a href="#changelog">Changelog</a>
-          <a href="#download">Download</a>
-          <a href="#support">Support</a>
-        </nav>
-      </header>
+    </header>
 
-      <section class="hero">
-        <div>
-          <div class="hero-kicker">
-            <span class="hero-kicker-badge">
-              <span>📦</span>
-              <span>v1.0 · Public beta</span>
-            </span>
-            <span>Track your day without the noise</span>
-          </div>
-
-          <h1 class="hero-title">
-            Calories, macros, and meals.
-            <span>Without the bloat.</span>
-          </h1>
-
-          <p class="hero-sub">
-            MacroPal is a focused food tracker: fast search, clean diary, and
-            a calm UI. No social spam, no dark patterns – just your day,
-            your numbers, and your goals.
-          </p>
-
-          <div class="hero-cta-row">
-            <!-- TODO: replace href with your real APK URL -->
-            <a
-              class="btn btn-primary"
-              href="https://example.com/macropal-latest.apk"
-            >
-              <span>⬇️ Download latest APK</span>
-            </a>
-
-            <!-- TODO: replace with your Play Store URL (when live) -->
-            <a
-              class="btn btn-ghost"
-              href="https://play.google.com/store/apps/details?id=com.example.macropal"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span>Google Play (coming soon)</span>
-            </a>
-          </div>
-
-          <div class="hero-meta-row">
-            <div class="hero-meta-pill">
-              <span class="dot"></span>
-              <span>Active development – updates weekly</span>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="hero-title animate-slide-up">Your Personal Nutrition Tracking Companion</h1>
+            <p class="hero-subtitle animate-slide-up" style="animation-delay: 0.2s;">Track your meals, monitor macros, log workouts, and achieve your health goals with MacroPal</p>
+            <div class="hero-buttons animate-slide-up" style="animation-delay: 0.4s;">
+                <a href="#download" class="btn btn-primary">Download App</a>
+                <a href="#features" class="btn btn-secondary">Learn More</a>
             </div>
-            <div class="hero-meta-pill">
-              <span>✔ No accounts sold</span>
-              <span>·</span>
-              <span>✔ No “diet” ads</span>
-            </div>
-          </div>
         </div>
+    </section>
 
-        <div class="hero-device" aria-hidden="true">
-          <div class="device-card">
-            <div class="device-notch"></div>
-            <div class="device-screen">
-              <div class="device-top-bar">
-                <span>Today</span>
-                <span>21:37 · 🔋 82%</span>
-              </div>
-
-              <div class="device-day-header">
-                <div>
-                  <div class="device-day-title">Your day at a glance</div>
-                  <div class="device-day-sub">2 meals logged · 1 snack</div>
-                </div>
-                <div class="device-pill">
-                  <span class="device-pill-dot"></span>
-                  <span>On track</span>
-                </div>
-              </div>
-
-              <div class="device-macros-row">
-                <div class="chip chip-accent">
-                  <span class="chip-dot blue"></span>
-                  <span class="chip-label">Calories</span>
-                  <span class="chip-value">1,345 / 2,100</span>
-                </div>
-                <div class="chip">
-                  <span class="chip-dot.green chip-dot"></span>
-                  <span class="chip-label">Protein</span>
-                  <span class="chip-value">82 g</span>
-                </div>
-                <div class="chip">
-                  <span class="chip-dot.yellow chip-dot"></span>
-                  <span class="chip-label">Carbs</span>
-                  <span class="chip-value">145 g</span>
-                </div>
-              </div>
-
-              <div class="device-meal-list">
-                <div class="meal-card">
-                  <div class="meal-main">
-                    <div class="meal-name">Breakfast</div>
-                    <div class="meal-items">Oats, milk, chocolate, banana</div>
-                  </div>
-                  <div>
-                    <div class="meal-kcal">540 kcal</div>
-                    <div class="meal-kcal-sub">31 P · 67 C · 17 F</div>
-                  </div>
-                </div>
-
-                <div class="meal-card">
-                  <div class="meal-main">
-                    <div class="meal-name">Lunch</div>
-                    <div class="meal-items">Chicken wrap, yogurt</div>
-                  </div>
-                  <div>
-                    <div class="meal-kcal">610 kcal</div>
-                    <div class="meal-kcal-sub">48 P · 55 C · 19 F</div>
-                  </div>
-                </div>
-
-                <div class="meal-card">
-                  <div class="meal-main">
-                    <div class="meal-name">Snack</div>
-                    <div class="meal-items">Protein bar, apple</div>
-                  </div>
-                  <div>
-                    <div class="meal-kcal">195 kcal</div>
-                    <div class="meal-kcal-sub">18 P · 16 C · 5 F</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="device-footer">
-                <span>Tap a meal to edit</span>
-                <button class="device-footer-btn">+ Add food</button>
-              </div>
-            </div>
-          </div>
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">About MacroPal</h2>
+            <p class="section-text">
+                MacroPal is a comprehensive nutrition tracking app designed to help you achieve your health and fitness goals 
+                through smart food logging, macro tracking, and personalized recommendations. Whether you're looking to lose weight, 
+                gain muscle, or maintain a healthy lifestyle, MacroPal provides the tools you need to stay on track.
+            </p>
+            <p class="section-text">
+                Built with modern web technologies and wrapped in a native mobile experience, MacroPal offers a seamless 
+                cross-platform experience on iOS, Android, and the web.
+            </p>
         </div>
-      </section>
+    </section>
 
-      <main>
-        <!-- FEATURES -->
-        <section id="features">
-          <h2>Made for tracking, not scrolling</h2>
-          <p class="section-sub">
-            MacroPal keeps things simple: fast food search, clear numbers, and
-            a diary that doesn’t fight you.
-          </p>
-
-          <div class="features-grid">
-            <div class="feature-card">
-              <div class="feature-icon">📒</div>
-              <div class="feature-title">Clean daily diary</div>
-              <div class="feature-body">
-                See your whole day on one screen: calories, macros, and each
-                meal in a simple stacked layout.
-              </div>
-            </div>
-
-            <div class="feature-card">
-              <div class="feature-icon">⚡</div>
-              <div class="feature-title">Fast food adding</div>
-              <div class="feature-body">
-                Add foods by grams or serving size, duplicate yesterday, and
-                quickly tweak portions without re-entering everything.
-              </div>
-            </div>
-
-            <div class="feature-card">
-              <div class="feature-icon">📊</div>
-              <div class="feature-title">Macro overview</div>
-              <div class="feature-body">
-                Keep an eye on protein, carbs and fats with a calm top bar that
-                updates as you log.
-              </div>
-            </div>
-
-            <div class="feature-card">
-              <div class="feature-icon">🛠️</div>
-              <div class="feature-title">Actively maintained</div>
-              <div class="feature-body">
-                New builds, fixes, and quality-of-life improvements are shipped
-                regularly. This page keeps all changelogs in one place.
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- CHANGELOG -->
-        <section id="changelog">
-          <h2>Changelog</h2>
-          <p class="section-sub">
-            Every notable change to MacroPal will be logged here. You can always
-            see what changed before updating your APK.
-          </p>
-
-          <div class="changelog-controls">
-            <div class="changelog-badges">
-              <div class="badge badge-accent">Latest on top</div>
-              <div class="badge">Stable &amp; beta builds</div>
-            </div>
-            <div class="badge">
-              <strong>Tip:</strong>&nbsp;use
-              <code>Ctrl+F / Cmd+F</code> to find a version.
-            </div>
-          </div>
-
-          <div class="changelog-list">
-            <!-- EXAMPLE ENTRY – DUPLICATE & EDIT FOR NEW RELEASES -->
-            <article class="changelog-item">
-              <div class="changelog-header">
-                <div>
-                  <div class="version-pill">
-                    <span>v1.0.0</span>
-                    <span class="version-tag">Public beta</span>
-                  </div>
+    <!-- Features Section -->
+    <section id="features" class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🍽️</div>
+                    <h3 class="feature-title">Smart Food Tracking</h3>
+                    <p class="feature-text">Quick add foods, barcode scanner, custom foods, meal templates, and recent items</p>
                 </div>
-                <div class="changelog-date">2025-11-19</div>
-              </div>
-
-              <div class="changelog-body">
-                <p>
-                  <span class="label-pill"><span>New</span> Core</span>
-                  Initial public beta of MacroPal.
-                </p>
-                <ul>
-                  <li>Daily diary with breakfast / lunch / dinner / snacks.</li>
-                  <li>Macros &amp; kcal overview at the top of the day.</li>
-                  <li>Food adding by grams and per-100g macros.</li>
-                  <li>Profile setup with basic targets.</li>
-                </ul>
-              </div>
-            </article>
-
-            <!-- TEMPLATE FOR NEXT RELEASE
-            <article class="changelog-item">
-              <div class="changelog-header">
-                <div>
-                  <div class="version-pill">
-                    <span>v1.0.1</span>
-                    <span class="version-tag">Stable</span>
-                  </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Advanced Analytics</h3>
+                    <p class="feature-text">Track macros, visual charts, multiple time ranges, weight tracking, and data export</p>
                 </div>
-                <div class="changelog-date">YYYY-MM-DD</div>
-              </div>
-
-              <div class="changelog-body">
-                <p>
-                  <span class="label-pill"><span>Improved</span> UX</span>
-                  Short summary of the release.
-                </p>
-                <ul>
-                  <li>Change #1</li>
-                  <li>Change #2</li>
-                  <li>Change #3</li>
-                </ul>
-              </div>
-            </article>
-            -->
-          </div>
-        </section>
-
-        <!-- DOWNLOAD -->
-        <section id="download">
-          <h2>Download MacroPal</h2>
-          <p class="section-sub">
-            Install the latest Android build as an APK. When MacroPal is live on
-            Google Play, you’ll find the store link here as well.
-          </p>
-
-          <div class="download-grid">
-            <div class="download-card">
-              <div class="download-label">Current release</div>
-              <div class="download-version">
-                <strong>v1.0.0</strong>
-                <span class="badge-accent badge">Public beta</span>
-              </div>
-              <div class="download-meta">
-                <span>Released: 2025-11-19</span>
-                <span>·</span>
-                <span>Android · APK</span>
-              </div>
-
-              <div class="download-actions">
-                <!-- TODO: replace href with your real APK URL -->
-                <a
-                  class="btn btn-primary"
-                  href="https://example.com/macropal-latest.apk"
-                >
-                  ⬇️ Download APK
-                </a>
-
-                <!-- TODO: replace with direct Google Play link when ready -->
-                <a
-                  class="btn btn-ghost"
-                  href="https://play.google.com/store/apps/details?id=com.example.macropal"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Open on Google Play
-                </a>
-              </div>
-
-              <div class="download-note">
-                If you’re installing an APK for the first time, Android will ask
-                you to allow installs from your browser or file manager.
-              </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💪</div>
+                    <h3 class="feature-title">Workout Integration</h3>
+                    <p class="feature-text">Activity tracking, calorie burn estimation, workout presets, and custom activities</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">Personalized Goals</h3>
+                    <p class="feature-text">AI-powered meal suggestions, dietary preferences, macro focus options, and goal setting</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3 class="feature-title">Beautiful Design</h3>
+                    <p class="feature-text">Dark & light themes, responsive design, offline support, and smooth animations</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <h3 class="feature-title">Security & Privacy</h3>
+                    <p class="feature-text">Firebase authentication, email verification, private data, and secure cloud sync</p>
+                </div>
             </div>
+        </div>
+    </section>
 
-            <div class="panel">
-              <strong>How updates work</strong>
-              <ul>
-                <li>
-                  New builds are uploaded here as APK files – this page will
-                  always point to the latest version.
-                </li>
-                <li>
-                  The changelog above tells you what’s new, fixed, or changed in
-                  each release.
-                </li>
-                <li>
-                  Once MacroPal is fully live on Google Play, you’ll be able to
-                  receive automatic updates through the Play Store.
-                </li>
-              </ul>
+    <!-- Download Section -->
+    <section id="download" class="section">
+        <div class="container">
+            <h2 class="section-title">Download MacroPal</h2>
+            <p class="section-text">Get started with MacroPal on your preferred platform</p>
+            <div class="download-grid">
+                <div class="download-card">
+                    <div class="download-icon">🤖</div>
+                    <h3 class="download-title">Android</h3>
+                    <p class="download-text">Download the APK and install on your Android device</p>
+                    <a href="example.html" class="btn btn-primary">Download APK</a>
+                </div>
+                <div class="download-card">
+                    <div class="download-icon">🍎</div>
+                    <h3 class="download-title">iOS</h3>
+                    <p class="download-text">Coming soon to the App Store</p>
+                    <a href="example.html" class="btn btn-secondary">Coming Soon</a>
+                </div>
             </div>
-          </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- SUPPORT -->
-        <section id="support">
-          <h2>Support & feedback</h2>
-          <p class="section-sub">
-            Found a bug, have an idea, or want to help test new builds? You can
-            reach out directly or open an issue.
-          </p>
-
-          <div class="support-grid">
-            <div class="support-card">
-              <h3>Contact</h3>
-              <ul class="support-list">
-                <!-- TODO: replace with your real email -->
-                <li>
-                  Email:
-                  <a href="mailto:youremail@example.com"
-                    >youremail@example.com</a
-                  >
-                </li>
-                <!-- TODO: replace with your real GitHub repo -->
-                <li>
-                  GitHub:
-                  <a
-                    href="https://github.com/Zanci19/MacroPal"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >MacroPal repository</a
-                  >
-                </li>
-              </ul>
+    <!-- Pro Tips Section -->
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">Pro Tips</h2>
+            <p class="section-text">Get the most out of MacroPal with these helpful tips</p>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <div class="tip-icon">📸</div>
+                    <h3 class="tip-title">Use the Barcode Scanner</h3>
+                    <p class="tip-text">For packaged foods - it's super fast and accurate!</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">🍽️</div>
+                    <h3 class="tip-title">Create Meal Templates</h3>
+                    <p class="tip-text">Save meals you eat regularly for quick logging</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">📊</div>
+                    <h3 class="tip-title">Check Analytics Weekly</h3>
+                    <p class="tip-text">Spot trends and adjust your diet accordingly</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">⚖️</div>
+                    <h3 class="tip-title">Weigh Consistently</h3>
+                    <p class="tip-text">Same time, same conditions for accurate tracking</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">🎯</div>
+                    <h3 class="tip-title">Set Realistic Goals</h3>
+                    <p class="tip-text">Celebrate small wins along your journey</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">💡</div>
+                    <h3 class="tip-title">Enable Smart Recommendations</h3>
+                    <p class="tip-text">Get personalized meal suggestions based on your profile</p>
+                </div>
             </div>
+        </div>
+    </section>
 
-            <div class="support-card">
-              <h3>How to report a bug</h3>
-              <ol class="support-list" style="padding-left: 18px">
-                <li>Tell me your Android version & phone model.</li>
-                <li>Explain what you did step-by-step.</li>
-                <li>Mention what you expected vs. what actually happened.</li>
-                <li>
-                  Screenshots / screen recordings are super helpful if you can
-                  add them.
-                </li>
-              </ol>
+    <!-- Tech Stack Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Built With Modern Technology</h2>
+            <p class="section-text">MacroPal leverages cutting-edge technologies to deliver a seamless experience</p>
+            <div class="tech-grid">
+                <div class="tech-category">
+                    <h3 class="tech-category-title">Frontend</h3>
+                    <div class="tech-tags">
+                        <span class="tech-tag">React 19</span>
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">Ionic Framework 8</span>
+                        <span class="tech-tag">Framer Motion</span>
+                        <span class="tech-tag">Recharts</span>
+                    </div>
+                </div>
+                <div class="tech-category">
+                    <h3 class="tech-category-title">Backend</h3>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Firebase Authentication</span>
+                        <span class="tech-tag">Cloud Firestore</span>
+                        <span class="tech-tag">Firebase Storage</span>
+                        <span class="tech-tag">Firebase Functions</span>
+                    </div>
+                </div>
+                <div class="tech-category">
+                    <h3 class="tech-category-title">Mobile</h3>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Capacitor 8</span>
+                        <span class="tech-tag">iOS Native</span>
+                        <span class="tech-tag">Android Native</span>
+                    </div>
+                </div>
             </div>
-          </div>
-        </section>
-      </main>
+        </div>
+    </section>
 
-      <footer>
-        <span>© <span id="year"></span> MacroPal. All rights reserved.</span>
-        <span>
-          Built by
-          <a
-            href="https://zanci19.github.io"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Žan</a
-          >
-          · No diet advice, just numbers.
-        </span>
-      </footer>
-    </div>
+    <!-- Roadmap Section -->
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">Roadmap</h2>
+            <p class="section-text">Exciting features coming to MacroPal</p>
+            <div class="roadmap-grid">
+                <div class="roadmap-card">
+                    <div class="roadmap-status">Coming Soon</div>
+                    <h3 class="roadmap-title">🌐 Multi-language Support</h3>
+                    <p class="roadmap-text">Access MacroPal in your preferred language</p>
+                </div>
+                <div class="roadmap-card">
+                    <div class="roadmap-status">Coming Soon</div>
+                    <h3 class="roadmap-title">🍽️ Recipe Builder</h3>
+                    <p class="roadmap-text">Create and save your own recipes with nutritional info</p>
+                </div>
+                <div class="roadmap-card">
+                    <div class="roadmap-status">Coming Soon</div>
+                    <h3 class="roadmap-title">📸 Photo Logging</h3>
+                    <p class="roadmap-text">Log meals with photos for visual tracking</p>
+                </div>
+                <div class="roadmap-card">
+                    <div class="roadmap-status">Future</div>
+                    <h3 class="roadmap-title">🔗 Fitness Tracker Integration</h3>
+                    <p class="roadmap-text">Sync with Apple Health and Google Fit</p>
+                </div>
+                <div class="roadmap-card">
+                    <div class="roadmap-status">Future</div>
+                    <h3 class="roadmap-title">💧 Water Tracking</h3>
+                    <p class="roadmap-text">Monitor daily water intake</p>
+                </div>
+                <div class="roadmap-card">
+                    <div class="roadmap-status">Future</div>
+                    <h3 class="roadmap-title">🥘 Meal Planning</h3>
+                    <p class="roadmap-text">Plan your meals ahead with a calendar view</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <script>
-      // Set current year in footer automatically
-      document.getElementById("year").textContent =
-        new Date().getFullYear().toString();
-    </script>
-  </body>
+    <!-- Support Section -->
+    <section id="support" class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">Support MacroPal</h2>
+            <p class="section-text">
+                MacroPal is free and ad-free for everyone. If you find it helpful, consider supporting the development 
+                to help keep it that way!
+            </p>
+            <div class="support-buttons">
+                <a href="https://buymeacoffee.com/zanci19" target="_blank" class="btn btn-primary">☕ Buy Me a Coffee</a>
+            </div>
+            <div class="contact-info">
+                <h3 class="contact-title">Get in Touch</h3>
+                <p class="contact-text">For questions, feedback, or support:</p>
+                <p class="contact-email">📧 <a href="mailto:zanci.torkarci64@gmail.com">zanci.torkarci64@gmail.com</a></p>
+            </div>
+            <div class="links-section">
+                <h3 class="links-title">Resources</h3>
+                <div class="links-grid">
+                    <a href="example.html" class="link-item">Privacy Policy</a>
+                    <a href="example.html" class="link-item">Terms of Service</a>
+                    <a href="https://github.com/Zanci19/MacroPal" target="_blank" class="link-item">GitHub Repository</a>
+                    <a href="example.html" class="link-item">Documentation</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">
+                © 2026 MacroPal. Licensed under MIT License. 
+                <a href="https://github.com/Zanci19/MacroPal" target="_blank" class="footer-link">View on GitHub</a>
+            </p>
+        </div>
+    </footer>
+</body>
 </html>
